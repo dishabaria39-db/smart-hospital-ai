@@ -32,12 +32,11 @@ The application provides dedicated modules for appointment booking, doctor recom
 ### Deployment
 - Vercel
 
-## Project Structure
+## ## 📁 Project Structure
 
+```text
 smart-hospital-ai/
-│
 ├── public/
-│
 ├── src/
 │   ├── components/
 │   │   ├── Hero.jsx
@@ -61,6 +60,7 @@ smart-hospital-ai/
 ├── package-lock.json
 ├── vite.config.js
 └── README.md
+```
 
 ## How to Run Locally
 1. Clone the repository
