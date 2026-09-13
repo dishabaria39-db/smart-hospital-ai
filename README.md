@@ -96,6 +96,6 @@ Doctor and patient profile management
 This project is developed for educational and portfolio purposes.
 
 ##  Developer
-Disha Ravi Baria
+Disha Ravi Baria,
 B.Tech in Artificial Intelligence
 Usha Mittal Institute of Technology, SNDT Women's University, Mumbai
