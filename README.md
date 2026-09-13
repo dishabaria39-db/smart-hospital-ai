@@ -34,7 +34,6 @@ The application provides dedicated modules for appointment booking, doctor recom
 
 ## Project Structure
 
-```text
 smart-hospital-ai/
 │
 ├── public/
