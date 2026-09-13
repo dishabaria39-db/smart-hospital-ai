@@ -1,0 +1,136 @@
+.doctors-page {
+  min-height: 100vh;
+  padding: 50px 8%;
+  background: #f5f9ff;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+.doctors-header {
+  text-align: center;
+  margin-bottom: 45px;
+}
+
+.doctors-header h1 {
+  color: #0a4d8c;
+  font-size: 40px;
+  margin-bottom: 12px;
+}
+
+.doctors-header p {
+  color: #555;
+  font-size: 18px;
+  max-width: 650px;
+  margin: auto;
+  line-height: 1.6;
+}
+
+.doctors-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+  max-width: 1100px;
+  margin: auto;
+}
+
+.doctor-card {
+  background: white;
+  padding: 30px 20px;
+  border-radius: 18px;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e1f0ff;
+  transition: 0.3s;
+}
+
+.doctor-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.12);
+}
+
+.doctor-icon {
+  width: 90px;
+  height: 90px;
+  margin: 0 auto 20px;
+  border-radius: 50%;
+  background: #e6f4ff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 50px;
+}
+
+.doctor-card h2 {
+  color: #0a4d8c;
+  font-size: 21px;
+  margin-bottom: 8px;
+}
+
+.doctor-card h3 {
+  color: #2c7fb8;
+  font-size: 17px;
+  margin-bottom: 15px;
+}
+
+.doctor-card p {
+  color: #666;
+  margin: 8px 0;
+}
+
+.availability {
+  color: #168a45 !important;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.doctor-card button {
+  margin-top: 18px;
+  padding: 11px 20px;
+  border: none;
+  border-radius: 25px;
+  background: #0a84ff;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.doctor-card button:hover {
+  background: #0066cc;
+}
+
+.back-home {
+  display: block;
+  margin: 40px auto 0;
+  padding: 11px 22px;
+  border: none;
+  border-radius: 25px;
+  background: #777;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.back-home:hover {
+  background: #555;
+}
+
+@media (max-width: 900px) {
+  .doctors-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .doctors-page {
+    padding: 35px 20px;
+  }
+
+  .doctors-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .doctors-header h1 {
+    font-size: 32px;
+  }
+}

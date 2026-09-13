@@ -1,0 +1,89 @@
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to right, #e6f7ff, #ffffff);
+  font-family: Arial, sans-serif;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+.login-card {
+  width: 400px;
+  max-width: 100%;
+  padding: 40px;
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  text-align: center;
+  box-sizing: border-box;
+}
+
+.login-icon {
+  font-size: 50px;
+  margin-bottom: 10px;
+}
+
+.login-card h1 {
+  color: #0a4d8c;
+  margin-bottom: 10px;
+}
+
+.login-card p {
+  color: #666;
+  margin-bottom: 30px;
+}
+
+.login-card form {
+  text-align: left;
+}
+
+.login-card label {
+  display: block;
+  margin-bottom: 7px;
+  margin-top: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.login-card input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+  font-size: 15px;
+}
+
+.login-card form button {
+  width: 100%;
+  padding: 13px;
+  margin-top: 25px;
+  border: none;
+  border-radius: 25px;
+  background: #0a84ff;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.login-card form button:hover {
+  background: #0066cc;
+}
+
+.switch-button,
+.back-button {
+  width: 100%;
+  padding: 10px;
+  margin-top: 15px;
+  border: none;
+  background: transparent;
+  color: #0a84ff;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.back-button {
+  color: #666;
+}

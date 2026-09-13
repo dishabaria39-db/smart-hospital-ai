@@ -1,0 +1,323 @@
+/* ================================= */
+/* MEDICAL REPORTS PAGE */
+/* ================================= */
+
+.medical-reports-page {
+  min-height: 100vh;
+  padding: 40px 8%;
+  background: #f5f9ff;
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+}
+
+
+/* ================================= */
+/* HEADER */
+/* ================================= */
+
+.medical-reports-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+}
+
+.medical-reports-header h1 {
+  color: #0a4d8c;
+  margin-bottom: 8px;
+}
+
+.medical-reports-header p {
+  color: #666;
+  font-size: 16px;
+}
+
+.medical-reports-header button {
+  padding: 11px 22px;
+  border: none;
+  border-radius: 25px;
+  background: #0a84ff;
+  color: white;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.medical-reports-header button:hover {
+  background: #0066cc;
+}
+
+
+/* ================================= */
+/* MAIN CONTAINER */
+/* ================================= */
+
+.report-container {
+  max-width: 1000px;
+  margin: auto;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  gap: 25px;
+}
+
+
+/* ================================= */
+/* UPLOAD CARD */
+/* ================================= */
+
+.upload-card {
+  background: white;
+
+  padding: 35px;
+
+  border-radius: 20px;
+
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+
+  text-align: center;
+}
+
+.report-icon {
+  font-size: 55px;
+
+  margin-bottom: 15px;
+}
+
+.upload-card h2 {
+  color: #0a4d8c;
+
+  margin-bottom: 10px;
+}
+
+.upload-card p {
+  color: #666;
+
+  line-height: 1.5;
+}
+
+
+/* ================================= */
+/* FILE INPUT */
+/* ================================= */
+
+.file-label {
+  display: inline-block;
+
+  margin-top: 20px;
+
+  padding: 12px 22px;
+
+  border-radius: 25px;
+
+  background: #e6f4ff;
+
+  color: #0a4d8c;
+
+  font-weight: bold;
+
+  cursor: pointer;
+}
+
+.file-label:hover {
+  background: #d4edff;
+}
+
+.file-label input {
+  display: none;
+}
+
+
+/* ================================= */
+/* FILE NAME */
+/* ================================= */
+
+.file-name {
+  margin-top: 15px;
+
+  font-size: 14px;
+
+  color: #333 !important;
+
+  word-break: break-word;
+}
+
+
+/* ================================= */
+/* ANALYZE BUTTON */
+/* ================================= */
+
+.analyze-button {
+  display: block;
+
+  margin: 25px auto 0;
+
+  padding: 12px 25px;
+
+  border: none;
+
+  border-radius: 25px;
+
+  background: #0a84ff;
+
+  color: white;
+
+  font-size: 15px;
+
+  cursor: pointer;
+}
+
+.analyze-button:hover {
+  background: #0066cc;
+}
+
+
+/* ================================= */
+/* ANALYSIS CARD */
+/* ================================= */
+
+.analysis-card {
+  background: white;
+
+  padding: 30px;
+
+  border-radius: 20px;
+
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+}
+
+.analysis-card h2 {
+  color: #0a4d8c;
+
+  margin-bottom: 20px;
+}
+
+
+/* ================================= */
+/* STATUS */
+/* ================================= */
+
+.analysis-status {
+  display: inline-block;
+
+  padding: 7px 14px;
+
+  border-radius: 20px;
+
+  background: #e6f7ed;
+
+  color: #168a45;
+
+  font-size: 13px;
+
+  font-weight: bold;
+
+  margin-bottom: 20px;
+}
+
+
+/* ================================= */
+/* ANALYSIS SECTIONS */
+/* ================================= */
+
+.analysis-section {
+  margin-bottom: 20px;
+
+  padding: 18px;
+
+  background: #f8fbff;
+
+  border-radius: 12px;
+}
+
+.analysis-section h3 {
+  color: #0a4d8c;
+
+  margin-bottom: 8px;
+}
+
+.analysis-section p {
+  color: #555;
+
+  line-height: 1.6;
+
+  margin: 0;
+}
+
+
+/* ================================= */
+/* DISCLAIMER */
+/* ================================= */
+
+.report-disclaimer {
+  max-width: 1000px;
+
+  margin: 30px auto 0;
+
+  padding: 15px 20px;
+
+  background: #fff8e6;
+
+  border: 1px solid #ffe0a3;
+
+  border-radius: 12px;
+
+  color: #765c20;
+
+  font-size: 14px;
+
+  line-height: 1.5;
+
+  text-align: center;
+}
+
+
+/* ================================= */
+/* MOBILE */
+/* ================================= */
+
+@media (max-width: 800px) {
+
+  .report-container {
+    grid-template-columns: 1fr;
+  }
+
+  .medical-reports-header {
+    align-items: flex-start;
+
+    gap: 20px;
+  }
+
+  .medical-reports-page {
+    padding: 30px 20px;
+  }
+  .medical-values {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.medical-value {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 12px 15px;
+
+  background: white;
+
+  border: 1px solid #dcecff;
+
+  border-radius: 10px;
+}
+
+.medical-value span {
+  color: #555;
+  font-weight: bold;
+}
+
+.medical-value strong {
+  color: #0a4d8c;
+  font-size: 16px;
+}
+}
