@@ -34,6 +34,7 @@ The application provides dedicated modules for appointment booking, doctor recom
 
 ## Project Structure
 
+```text
 smart-hospital-ai/
 │
 ├── public/
@@ -57,7 +58,6 @@ smart-hospital-ai/
 │   ├── styles/
 │   └── assets/
 │
-├── index.html
 ├── package.json
 ├── package-lock.json
 ├── vite.config.js
