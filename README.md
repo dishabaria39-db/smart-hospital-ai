@@ -10,8 +10,6 @@ The platform combines traditional hospital services with AI-powered features, al
 
 The project is built as a portfolio-focused full-stack web application using React, Vite, CSS, Node.js, Express.js, and Google Gemini API.
 
----
-
 ## ✨ Key Features
 
 ### 👤 Patient Login & Profile
@@ -91,8 +89,6 @@ Centralized dashboard providing access to:
 - Patient Profile
 - Emergency Assistance
 
----
-
 ## 🛠️ Tech Stack
 
 ### Frontend
@@ -132,9 +128,7 @@ Centralized dashboard providing access to:
 - Visual Studio Code
 - Vite
 
----
-
-## 🏗️ Application Architecture
+##  Application Architecture
 
 Smart Hospital AI
 │
@@ -154,6 +148,8 @@ Smart Hospital AI
     ├── OCR for Scanned Documents
     ├── Image Analysis
     └── Gemini AI Analysis
+
+## Project Structure
 
 smart-hospital-ai/
 │
