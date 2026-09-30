@@ -128,72 +128,72 @@ Centralized dashboard providing access to:
 - Visual Studio Code
 - Vite
 
-##  Application Architecture
-'''text
-Smart Hospital AI
-│
-├── Frontend
-│   ├── React
-│   ├── Vite
-│   ├── JavaScript
-│   └── CSS
-│
-├── Backend
-│   ├── Node.js
-│   ├── Express.js
-│   └── Google Gemini API
-│
-└── AI Medical Report Analysis
-    ├── PDF Text Extraction
-    ├── OCR for Scanned Documents
-    ├── Image Analysis
-    └── Gemini AI Analysis
+## 🏗️ Application Architecture
 
-## Project Structure
+    Smart Hospital AI
+    │
+    ├── Frontend
+    │   ├── React
+    │   ├── Vite
+    │   ├── JavaScript
+    │   └── CSS
+    │
+    ├── Backend
+    │   ├── Node.js
+    │   ├── Express.js
+    │   └── Google Gemini API
+    │
+    └── AI Medical Report Analysis
+        ├── PDF Text Extraction
+        ├── OCR for Scanned Documents
+        ├── Image Analysis
+        └── Gemini AI Analysis
 
-smart-hospital-ai/
-│
-├── backend/
-│   └── server.js
-│
-├── public/
-│
-├── src/
-│   ├── components/
-│   │   ├── Hero.jsx
-│   │   └── Navbar.jsx
-│   │
-│   ├── pages/
-│   │   ├── Appointments.jsx
-│   │   ├── AppointmentManagement.jsx
-│   │   ├── Chatbot.jsx
-│   │   ├── Dashboard.jsx
-│   │   ├── Doctors.jsx
-│   │   ├── Emergency.jsx
-│   │   ├── EmergencyRequests.jsx
-│   │   ├── Home.jsx
-│   │   ├── Login.jsx
-│   │   ├── MedicalReports.jsx
-│   │   ├── PatientPrediction.jsx
-│   │   └── PatientProfile.jsx
-│   │
-│   ├── styles/
-│   │   ├── Appointments.css
-│   │   ├── Dashboard.css
-│   │   ├── Emergency.css
-│   │   ├── Hero.css
-│   │   ├── MedicalReports.css
-│   │   └── ...
-│   │
-│   └── App.jsx
-│
-├── .gitignore
-├── index.html
-├── package.json
-├── package-lock.json
-├── server.js
-├── vite.config.js
-└── README.md
+## 📁 Project Structure
+
+    smart-hospital-ai/
+    │
+    ├── backend/
+    │   └── server.js
+    │
+    ├── public/
+    │
+    ├── src/
+    │   ├── components/
+    │   │   ├── Hero.jsx
+    │   │   └── Navbar.jsx
+    │   │
+    │   ├── pages/
+    │   │   ├── Appointments.jsx
+    │   │   ├── AppointmentManagement.jsx
+    │   │   ├── Chatbot.jsx
+    │   │   ├── Dashboard.jsx
+    │   │   ├── Doctors.jsx
+    │   │   ├── Emergency.jsx
+    │   │   ├── EmergencyRequests.jsx
+    │   │   ├── Home.jsx
+    │   │   ├── Login.jsx
+    │   │   ├── MedicalReports.jsx
+    │   │   ├── PatientPrediction.jsx
+    │   │   └── PatientProfile.jsx
+    │   │
+    │   ├── styles/
+    │   │   ├── Appointments.css
+    │   │   ├── Dashboard.css
+    │   │   ├── Emergency.css
+    │   │   ├── Hero.css
+    │   │   ├── MedicalReports.css
+    │   │   └── ...
+    │   │
+    │   └── App.jsx
+    │
+    ├── .gitignore
+    ├── index.html
+    ├── package.json
+    ├── package-lock.json
+    ├── server.js
+    ├── vite.config.js
+    └── README.md
 
 # 🚀 Getting Started
 1. Clone the repository
@@ -251,7 +251,7 @@ Appointment reminders
 Production-level security and privacy controls
 
 # 👩‍💻 Developer
-Disha Ravi Baria
-B.Tech in Artificial Intelligence
-Usha Mittal Institute of Technology
+Disha Ravi Baria, 
+B.Tech in Artificial Intelligence, 
+Usha Mittal Institute of Technology, 
 SNDT Women's University, Mumbai
