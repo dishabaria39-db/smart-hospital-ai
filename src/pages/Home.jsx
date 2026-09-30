@@ -10,11 +10,7 @@ function Home({ setPage, user, viewAppointment }) {
         user={user}
       />
 
-      <Hero
-        setPage={setPage}
-        user={user}
-        viewAppointment={viewAppointment}
-      />
+      <Hero />
     </>
   );
 }

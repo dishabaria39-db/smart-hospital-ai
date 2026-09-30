@@ -1,0 +1,784 @@
+/* ==================================================
+   EMERGENCY PAGE
+================================================== */
+
+.emergency-page {
+  min-height: 100vh;
+  padding: 25px 6%;
+  background: linear-gradient(135deg, #f5f9ff, #fff5f5);
+  box-sizing: border-box;
+}
+
+
+/* ==================================================
+   EMERGENCY HEADER
+================================================== */
+
+.emergency-header {
+  position: relative;
+  text-align: center;
+
+  background: white;
+  padding: 25px 30px;
+
+  border-radius: 16px;
+  margin-bottom: 18px;
+
+  box-shadow: 0 5px 18px rgba(30, 64, 175, 0.08);
+}
+
+.emergency-header h1 {
+  margin: 0;
+  color: #b4232c;
+  font-size: 32px;
+  font-weight: 700;
+}
+
+.emergency-header p {
+  margin: 7px auto 0;
+  max-width: 700px;
+
+  color: #475569;
+  font-size: 15px;
+  line-height: 1.45;
+}
+
+
+/* ==================================================
+   DASHBOARD BUTTON
+================================================== */
+
+.dashboard-button {
+  position: absolute;
+  right: 25px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  background: linear-gradient(135deg, #2196f3, #4b6fff);
+  color: white;
+
+  border: none;
+  border-radius: 22px;
+
+  padding: 10px 18px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.dashboard-button:hover {
+  background: linear-gradient(135deg, #1976d2, #3f51d9);
+  transform: translateY(-50%) translateY(-1px);
+}
+
+
+/* ==================================================
+   DEMO NOTICE
+================================================== */
+
+.emergency-notice {
+  background: #fff7ed;
+
+  border: 1px solid #fdba74;
+
+  color: #9a3412;
+
+  padding: 13px 18px;
+
+  border-radius: 10px;
+
+  margin-bottom: 18px;
+
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+
+/* ==================================================
+   GENERAL EMERGENCY SECTION
+================================================== */
+
+.emergency-section {
+  background: white;
+
+  padding: 22px;
+
+  border-radius: 16px;
+
+  margin-bottom: 18px;
+
+  box-shadow: 0 5px 18px rgba(15, 23, 42, 0.07);
+}
+
+.emergency-section h2 {
+  margin: 0 0 14px;
+
+  color: #1e293b;
+
+  font-size: 23px;
+  font-weight: 700;
+}
+
+
+/* ==================================================
+   HOSPITAL INFORMATION
+================================================== */
+
+.emergency-info-grid {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 14px;
+}
+
+.emergency-info-card {
+  background: linear-gradient(145deg, #ffffff, #f5f9ff);
+
+  border: 1px solid #dce7f3;
+
+  border-radius: 12px;
+
+  padding: 16px;
+
+  min-height: 135px;
+
+  box-sizing: border-box;
+
+  transition: 0.2s ease;
+}
+
+.emergency-info-card:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 5px 15px rgba(30, 64, 175, 0.08);
+}
+
+.emergency-info-card span {
+  display: block;
+
+  font-size: 27px;
+
+  margin-bottom: 7px;
+}
+
+.emergency-info-card h3 {
+  margin: 0 0 7px;
+
+  color: #263f61;
+
+  font-size: 17px;
+}
+
+.emergency-info-card p {
+  margin: 4px 0;
+
+  color: #475569;
+
+  font-size: 13px;
+
+  line-height: 1.45;
+}
+
+
+/* ==================================================
+   EMERGENCY REQUEST FORM
+================================================== */
+
+.emergency-request-section {
+  border-top: 4px solid #dc2626;
+}
+
+.section-description {
+  margin: -5px 0 18px;
+
+  color: #475569;
+
+  font-size: 14px;
+}
+
+
+/* ==================================================
+   FORM
+================================================== */
+
+.emergency-form {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 14px 18px;
+}
+
+.form-group {
+  display: flex;
+
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 5px;
+
+  color: #334155;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+
+  padding: 10px 12px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #cbd5e1;
+
+  border-radius: 8px;
+
+  font-size: 14px;
+
+  font-family: inherit;
+
+  outline: none;
+
+  background: #ffffff;
+
+  color: #334155;
+}
+
+.form-group input,
+.form-group select {
+  height: 40px;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #94a3b8;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: #2563eb;
+
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+
+/* ==================================================
+   FULL WIDTH
+================================================== */
+
+.full-width {
+  grid-column: span 2;
+}
+
+
+/* ==================================================
+   SUBMIT BUTTON
+================================================== */
+
+.submit-emergency-button {
+  grid-column: span 2;
+
+  padding: 12px;
+
+  background: linear-gradient(135deg, #dc2626, #ef4444);
+
+  color: white;
+
+  border: none;
+
+  border-radius: 9px;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.submit-emergency-button:hover {
+  background: linear-gradient(135deg, #b91c1c, #dc2626);
+
+  transform: translateY(-1px);
+}
+
+
+/* ==================================================
+   EMERGENCY RESULT
+================================================== */
+
+.emergency-result {
+  background: white;
+
+  padding: 22px;
+
+  border-radius: 16px;
+
+  margin-bottom: 22px;
+
+  text-align: center;
+
+  box-shadow: 0 5px 18px rgba(15, 23, 42, 0.07);
+
+  border-top: 4px solid #10b981;
+}
+
+.emergency-result h2 {
+  margin: 0 0 12px;
+
+  color: #1e293b;
+}
+
+.request-id {
+  display: inline-block;
+
+  background: #ecfdf5;
+
+  color: #047857;
+
+  padding: 9px 16px;
+
+  border-radius: 8px;
+
+  font-size: 19px;
+
+  font-weight: 700;
+
+  letter-spacing: 1px;
+
+  margin-bottom: 15px;
+}
+
+
+/* ==================================================
+   REQUEST DETAILS
+================================================== */
+
+.request-details {
+  max-width: 650px;
+
+  margin: 0 auto 20px;
+
+  text-align: left;
+
+  background: #f8fafc;
+
+  padding: 15px 18px;
+
+  border-radius: 10px;
+}
+
+.request-details p {
+  margin: 7px 0;
+
+  color: #334155;
+
+  font-size: 14px;
+
+  line-height: 1.45;
+}
+
+.request-details strong {
+  color: #172b4d;
+
+  font-weight: 700;
+}
+
+
+/* ==================================================
+   STATUS
+================================================== */
+
+.emergency-status {
+  border-top: 1px solid #e2e8f0;
+
+  padding-top: 16px;
+}
+
+.emergency-status h3 {
+  margin: 0 0 10px;
+
+  color: #334155;
+}
+
+.status-badge {
+  display: inline-block;
+
+  background: #dbeafe;
+
+  color: #1d4ed8;
+
+  padding: 8px 16px;
+
+  border-radius: 20px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  margin-bottom: 16px;
+}
+
+.status-flow {
+  display: flex;
+
+  justify-content: center;
+
+  align-items: center;
+
+  gap: 9px;
+
+  flex-wrap: wrap;
+}
+
+.status-flow span {
+  padding: 7px 13px;
+
+  background: #f1f5f9;
+
+  color: #64748b;
+
+  border-radius: 20px;
+
+  font-size: 13px;
+}
+
+.status-flow span.active {
+  background: #dcfce7;
+
+  color: #15803d;
+
+  font-weight: 600;
+}
+
+
+/* ==================================================
+   EMERGENCY REQUESTS PAGE
+================================================== */
+
+.emergency-requests-page {
+  min-height: 100vh;
+
+  padding: 25px 6%;
+
+  background: linear-gradient(135deg, #f5f9ff, #fff5f5);
+
+  box-sizing: border-box;
+}
+
+
+/* ==================================================
+   EMERGENCY REQUESTS HEADER
+================================================== */
+
+.emergency-requests-header {
+  position: relative;
+
+  background: white;
+
+  padding: 20px 30px;
+
+  border-radius: 16px;
+
+  margin-bottom: 18px;
+
+  box-shadow: 0 5px 18px rgba(30, 64, 175, 0.08);
+}
+
+.emergency-requests-header h1 {
+  margin: 0 0 6px;
+
+  color: #b4232c;
+
+  font-size: 30px;
+
+  font-weight: 700;
+}
+
+.emergency-requests-header p {
+  margin: 0;
+
+  color: #475569;
+
+  font-size: 15px;
+
+  line-height: 1.4;
+}
+
+
+/* ==================================================
+   BACK TO DASHBOARD
+================================================== */
+
+.back-dashboard-button {
+  position: absolute;
+
+  right: 25px;
+
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  padding: 10px 18px;
+
+  background: linear-gradient(135deg, #2196f3, #4b6fff);
+
+  color: white;
+
+  border: none;
+
+  border-radius: 22px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.back-dashboard-button:hover {
+  background: linear-gradient(135deg, #1976d2, #3f51d9);
+
+  transform: translateY(-50%) translateY(-1px);
+}
+
+
+/* ==================================================
+   REQUESTS CONTAINER
+================================================== */
+
+.emergency-requests-container {
+  width: 100%;
+
+  max-width: 1050px;
+
+  margin: 0 auto;
+}
+
+
+/* ==================================================
+   REQUEST CARD
+================================================== */
+
+.emergency-request-card {
+  background: white;
+
+  border: 1px solid #e2e8f0;
+
+  border-left: 5px solid #dc2626;
+
+  border-radius: 15px;
+
+  padding: 18px 22px;
+
+  margin-bottom: 16px;
+
+  box-shadow: 0 5px 16px rgba(15, 23, 42, 0.08);
+
+  box-sizing: border-box;
+}
+
+
+/* ==================================================
+   REQUEST CARD TOP
+================================================== */
+
+.request-card-top {
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: center;
+
+  margin-bottom: 12px;
+
+  padding-bottom: 10px;
+
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.request-card-top h2 {
+  margin: 0;
+
+  color: #1e3a5f;
+
+  font-size: 20px;
+
+  font-weight: 700;
+}
+
+.request-status {
+  background: #dbeafe;
+
+  color: #1d4ed8;
+
+  padding: 7px 14px;
+
+  border-radius: 20px;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+
+/* ==================================================
+   REQUEST DETAILS - READABLE
+================================================== */
+
+.emergency-request-card .request-details {
+  background: #f8fafc;
+
+  border-radius: 10px;
+
+  padding: 12px 16px;
+
+  margin: 0;
+
+  max-width: none;
+}
+
+.emergency-request-card .request-details p {
+  margin: 7px 0;
+
+  color: #334155;
+
+  font-size: 14px;
+
+  line-height: 1.45;
+}
+
+.emergency-request-card .request-details strong {
+  color: #172b4d;
+
+  font-weight: 700;
+}
+
+
+/* ==================================================
+   RESPONSIVE
+================================================== */
+
+@media (max-width: 900px) {
+
+  .emergency-info-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+
+@media (max-width: 700px) {
+
+  .emergency-page {
+    padding: 18px 15px;
+  }
+
+  .emergency-header {
+    padding: 65px 18px 20px;
+  }
+
+  .emergency-header h1 {
+    font-size: 28px;
+  }
+
+  .dashboard-button {
+    top: 18px;
+
+    right: 20px;
+
+    transform: none;
+  }
+
+  .dashboard-button:hover {
+    transform: translateY(-1px);
+  }
+
+  .emergency-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .emergency-form {
+    grid-template-columns: 1fr;
+  }
+
+  .full-width {
+    grid-column: span 1;
+  }
+
+  .emergency-requests-page {
+    padding: 18px 15px;
+  }
+
+  .emergency-requests-header {
+    padding: 18px 20px;
+
+    padding-top: 65px;
+  }
+
+  .emergency-requests-header h1 {
+    font-size: 26px;
+  }
+
+  .emergency-requests-header p {
+    font-size: 14px;
+  }
+
+  .back-dashboard-button {
+    top: 18px;
+
+    right: 20px;
+
+    transform: none;
+  }
+
+  .back-dashboard-button:hover {
+    transform: translateY(-1px);
+  }
+
+  .request-card-top {
+    align-items: flex-start;
+
+    gap: 10px;
+  }
+
+  .request-card-top h2 {
+    font-size: 18px;
+  }
+
+  .request-status {
+    font-size: 12px;
+
+    padding: 6px 10px;
+  }
+
+  .emergency-request-card {
+    padding: 15px;
+  }
+
+  .emergency-request-card .request-details {
+    padding: 10px 13px;
+  }
+
+  .emergency-request-card .request-details p {
+    font-size: 13px;
+  }
+
+}

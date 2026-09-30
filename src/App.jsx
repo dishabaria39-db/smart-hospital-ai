@@ -1,3 +1,6 @@
+import AppointmentManagement from "./pages/AppointmentManagement";
+import Emergency from "./pages/Emergency";
+import PatientProfile from "./pages/PatientProfile";
 import { useState } from "react";
 import Chatbot from "./pages/Chatbot";
 import Home from "./pages/Home";
@@ -43,7 +46,7 @@ function App() {
         <Home
           setPage={setPage}
           user={user}
-          viewAppointment={viewAppointment}
+          
         />
       )}
 
@@ -64,6 +67,13 @@ function App() {
         />
       )}
 
+      {page === "appointment-management" && (
+  <AppointmentManagement
+    setPage={setPage}
+    user={user}
+  />
+)}
+
       {/* LOGIN */}
       {page === "login" && (
         <Login
@@ -83,6 +93,14 @@ function App() {
 {page === "patient-prediction" && (
   <PatientPrediction setPage={setPage} />
 )}
+{/* PATIENT PROFILE */}
+{page === "patient-profile" && (
+  <PatientProfile
+    setPage={setPage}
+    user={user}
+    setUser={setUser}
+  />
+)}
       {/* DASHBOARD */}
       {page === "dashboard" && (
         <Dashboard
@@ -91,6 +109,14 @@ function App() {
           setUser={setUser}
         />
       )}
+      {/* EMERGENCY */}
+{page === "emergency" && (
+  <Emergency
+   setPage={setPage}
+   user={user}
+   />
+)}
+
     </>
   );
 }

@@ -1,156 +1,440 @@
 import { useState } from "react";
+import * as pdfjsLib from "pdfjs-dist";
+import pdfWorker from "pdfjs-dist/build/pdf.worker.mjs?url";
 import "../styles/MedicalReports.css";
+
+pdfjsLib.GlobalWorkerOptions.workerSrc = pdfWorker;
 
 function MedicalReports({ setPage }) {
   const [file, setFile] = useState(null);
   const [reportText, setReportText] = useState("");
+  const [reportImage, setReportImage] = useState(null);
+  const [reportMimeType, setReportMimeType] = useState("");
   const [analysis, setAnalysis] = useState(null);
+  const [isProcessing, setIsProcessing] = useState(false);
 
-  const handleFileChange = (e) => {
+  // ================= FILE PROCESSING =================
+
+  const handleFileChange = async (e) => {
     const selectedFile = e.target.files[0];
 
     if (!selectedFile) return;
 
+    console.log(
+      "SELECTED FILE:",
+      selectedFile.name,
+      selectedFile.type
+    );
+
+    setIsProcessing(true);
     setFile(selectedFile);
     setAnalysis(null);
 
-    if (selectedFile.type === "text/plain") {
-      const reader = new FileReader();
+    // Clear previous report data
+    setReportText("");
+    setReportImage(null);
+    setReportMimeType("");
 
-      reader.onload = (event) => {
-        setReportText(event.target.result);
-      };
+    try {
+      // ================= TXT =================
 
-      reader.readAsText(selectedFile);
-    } else {
+      if (selectedFile.type === "text/plain") {
+        const text = await selectedFile.text();
+
+        if (!text.trim()) {
+          throw new Error("The text file is empty.");
+        }
+
+        setReportText(text);
+        setIsProcessing(false);
+
+        return;
+      }
+
+      // ================= JPEG / JPG =================
+
+      if (
+        selectedFile.type === "image/jpeg" ||
+        selectedFile.type === "image/jpg"
+      ) {
+        const reader = new FileReader();
+
+        const base64Image = await new Promise(
+          (resolve, reject) => {
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = reject;
+
+            reader.readAsDataURL(selectedFile);
+          }
+        );
+
+        const imageParts = base64Image.split(",");
+
+        if (imageParts.length < 2) {
+          throw new Error(
+            "The image could not be converted."
+          );
+        }
+
+        const imageBase64 = imageParts[1];
+
+        setReportImage(imageBase64);
+        setReportMimeType("image/jpeg");
+        setReportText("");
+
+        console.log(
+          "Medical report image prepared for Gemini Vision."
+        );
+
+        console.log(
+          "Image base64 length:",
+          imageBase64.length
+        );
+
+        setIsProcessing(false);
+
+        return;
+      }
+
+      // ================= PDF =================
+
+      if (selectedFile.type === "application/pdf") {
+        const arrayBuffer =
+          await selectedFile.arrayBuffer();
+
+        const pdf = await pdfjsLib.getDocument({
+          data: new Uint8Array(arrayBuffer),
+        }).promise;
+
+        let extractedText = "";
+
+        // Local variable.
+        // React state updates are asynchronous, so we
+        // cannot depend on reportImage immediately here.
+        let scannedImageBase64 = null;
+        let scannedImageMimeType = "";
+
+        for (
+          let pageNumber = 1;
+          pageNumber <= pdf.numPages;
+          pageNumber++
+        ) {
+          const page = await pdf.getPage(pageNumber);
+
+          const textContent =
+            await page.getTextContent();
+
+          console.log(
+            "PDF PAGE:",
+            pageNumber
+          );
+
+          console.log(
+            "PDF TEXT ITEMS:",
+            textContent.items.length
+          );
+
+          const items = textContent.items
+            .filter(
+              (item) =>
+                item.str &&
+                item.str.trim()
+            )
+            .map((item) => ({
+              text: item.str.trim(),
+              x: item.transform[4],
+              y: item.transform[5],
+            }));
+
+          /*
+           * For a normal text PDF, use the extracted
+           * PDF text directly.
+           */
+          const pageText = items
+            .sort((a, b) => {
+              if (
+                Math.abs(a.y - b.y) > 4
+              ) {
+                return b.y - a.y;
+              }
+
+              return a.x - b.x;
+            })
+            .map((item) => item.text)
+            .join(" ")
+            .trim();
+
+          console.log(
+            "PDF EXTRACTED TEXT:",
+            pageText
+          );
+
+          if (pageText) {
+            extractedText +=
+              pageText + "\n";
+          } else {
+            /*
+             * Scanned/image-based PDF page.
+             *
+             * Instead of Tesseract OCR, render the
+             * page and send the image to Gemini Vision.
+             */
+
+            console.log(
+              "Scanned PDF page detected:",
+              pageNumber
+            );
+
+            const viewport =
+              page.getViewport({
+                scale: 2,
+              });
+
+            const canvas =
+              document.createElement(
+                "canvas"
+              );
+
+            const context =
+              canvas.getContext("2d");
+
+            if (!context) {
+              throw new Error(
+                "Could not create PDF canvas."
+              );
+            }
+
+            canvas.width =
+              viewport.width;
+
+            canvas.height =
+              viewport.height;
+
+            await page.render({
+              canvasContext: context,
+              viewport: viewport,
+            }).promise;
+
+            const imageData =
+              canvas.toDataURL(
+                "image/jpeg",
+                0.95
+              );
+
+            const imageParts =
+              imageData.split(",");
+
+            if (imageParts.length < 2) {
+              throw new Error(
+                "Could not convert scanned PDF page to an image."
+              );
+            }
+
+            /*
+             * Keep the first scanned page.
+             * For the current medical report this
+             * is the page containing the table.
+             */
+            if (!scannedImageBase64) {
+              scannedImageBase64 =
+                imageParts[1];
+
+              scannedImageMimeType =
+                "image/jpeg";
+            }
+
+            console.log(
+              "Scanned PDF page prepared for Gemini Vision:",
+              pageNumber
+            );
+          }
+        }
+
+        /*
+         * Save scanned PDF image after processing
+         * the PDF. This avoids relying on an
+         * immediately updated React state.
+         */
+        if (scannedImageBase64) {
+          setReportImage(
+            scannedImageBase64
+          );
+
+          setReportMimeType(
+            scannedImageMimeType
+          );
+
+          console.log(
+            "Scanned PDF image stored for Gemini Vision."
+          );
+
+          console.log(
+            "Scanned image base64 length:",
+            scannedImageBase64.length
+          );
+        }
+
+        setReportText(
+          extractedText.trim()
+        );
+
+        setIsProcessing(false);
+
+        return;
+      }
+
+      // ================= INVALID FILE =================
+
+      alert(
+        "Please upload a PDF, JPEG, JPG, or TXT file."
+      );
+
+      setIsProcessing(false);
+    } catch (error) {
+      console.error(
+        "File processing error:",
+        error
+      );
+
+      setIsProcessing(false);
+
       setReportText("");
+      setReportImage(null);
+      setReportMimeType("");
+
+      alert(
+        "The file could not be processed. Please try another medical report."
+      );
     }
   };
 
+  // ================= AI ANALYSIS =================
 
-  // ================================
-  // EXTRACT VALUE FROM REPORT
-  // ================================
-
-  const extractValue = (pattern) => {
-    const match = reportText.match(pattern);
-
-    if (match) {
-      return match[1].trim();
-    }
-
-    return "Not found";
-  };
-
-
-  // ================================
-  // ANALYZE REPORT
-  // ================================
-
-  const analyzeReport = () => {
+  const analyzeReport = async () => {
     if (!file) {
-      alert("Please upload a medical report first.");
+      alert(
+        "Please upload a medical report first."
+      );
       return;
     }
 
-    if (file.type !== "text/plain") {
+    /*
+     * A report can contain either:
+     *
+     * 1. Text
+     * 2. An image
+     * 3. Both
+     */
+    if (
+      !reportText.trim() &&
+      !reportImage
+    ) {
+      alert(
+        "The report could not be read. Please make sure the file contains readable text or a valid image."
+      );
+      return;
+    }
+
+    setIsProcessing(true);
+    setAnalysis(null);
+
+    try {
+      console.log(
+        "Sending report for AI analysis..."
+      );
+
+      console.log(
+        "Has report text:",
+        !!reportText.trim()
+      );
+
+      console.log(
+        "Has report image:",
+        !!reportImage
+      );
+
+      console.log(
+        "Report MIME type:",
+        reportMimeType
+      );
+
+      const response = await fetch(
+        "http://localhost:5000/api/analyze-report",
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type":
+              "application/json",
+          },
+
+          body: JSON.stringify({
+            reportText:
+              reportText,
+
+            reportImage:
+              reportImage,
+
+            reportMimeType:
+              reportMimeType,
+          }),
+        }
+      );
+
+      const data =
+        await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.error ||
+            "The report could not be analyzed."
+        );
+      }
+
+      console.log(
+        "AI analysis received:",
+        data
+      );
+
       setAnalysis({
-        values: [],
-        summary:
-          "The report has been uploaded successfully. Detailed text extraction is currently available for .txt files in this prototype.",
-        recommendation:
-          "Please consult a qualified healthcare professional for actual medical interpretation.",
+        detectedValues:
+          data.detectedValues || [],
+
+        importantFindings:
+          data.importantFindings || [],
+
+        simpleExplanation:
+          data.simpleExplanation || "",
+
+        outOfRangeValues:
+          data.outOfRangeValues || [],
+
+        terminology:
+          data.terminology || [],
+
+        educationalInformation:
+          data.educationalInformation ||
+          [],
+
+        aiInsights:
+          data.aiInsights || [],
+
+        questionsForDoctor:
+          data.questionsForDoctor || [],
       });
+    } catch (error) {
+      console.error(
+        "Report analysis error:",
+        error
+      );
 
-      return;
+      alert(
+        "The report could not be analyzed. Please make sure the AI backend is running."
+      );
+    } finally {
+      setIsProcessing(false);
     }
-
-    if (!reportText.trim()) {
-      alert("The uploaded report does not contain readable text.");
-      return;
-    }
-
-
-    // ================================
-    // EXTRACT MEDICAL VALUES
-    // ================================
-
-    const hemoglobin = extractValue(
-      /hemoglobin\s*[:\-]?\s*([0-9.]+\s*g\/?dL)/i
-    );
-
-    const bloodPressure = extractValue(
-      /blood pressure\s*[:\-]?\s*([0-9]+\s*\/\s*[0-9]+\s*mmHg?)/i
-    );
-
-    const glucose = extractValue(
-      /(?:blood glucose|glucose|blood sugar)\s*[:\-]?\s*([0-9.]+\s*mg\/?dL)/i
-    );
-
-    const cholesterol = extractValue(
-      /cholesterol\s*[:\-]?\s*([0-9.]+\s*mg\/?dL)/i
-    );
-
-    const temperature = extractValue(
-      /temperature\s*[:\-]?\s*([0-9.]+\s*[FC])/i
-    );
-
-    const heartRate = extractValue(
-      /heart rate\s*[:\-]?\s*([0-9]+\s*bpm)/i
-    );
-
-
-    // ================================
-    // CREATE VALUE LIST
-    // ================================
-
-    const values = [
-      {
-        name: "Hemoglobin",
-        value: hemoglobin,
-      },
-      {
-        name: "Blood Pressure",
-        value: bloodPressure,
-      },
-      {
-        name: "Blood Glucose",
-        value: glucose,
-      },
-      {
-        name: "Cholesterol",
-        value: cholesterol,
-      },
-      {
-        name: "Temperature",
-        value: temperature,
-      },
-      {
-        name: "Heart Rate",
-        value: heartRate,
-      },
-    ];
-
-
-    // Remove values that were not found
-    const detectedValues = values.filter(
-      (item) => item.value !== "Not found"
-    );
-
-
-    setAnalysis({
-      values: detectedValues,
-
-      summary:
-        detectedValues.length > 0
-          ? `${detectedValues.length} medical value(s) detected from the uploaded report.`
-          : "No recognizable medical values were found in the uploaded report.",
-
-      recommendation:
-        "This feature extracts basic information from the uploaded report. It does not diagnose medical conditions. Please consult a qualified healthcare professional for medical interpretation.",
-    });
   };
-
 
   return (
     <div className="medical-reports-page">
@@ -160,27 +444,30 @@ function MedicalReports({ setPage }) {
       <div className="medical-reports-header">
 
         <div>
-          <h1>📄 Medical Report Analysis</h1>
+          <h1>
+            📄 Medical Report Analysis
+          </h1>
 
           <p>
-            Upload a medical report and get a simple
-            summary of the information detected.
+            Upload a medical report and get
+            AI-powered information from the
+            report.
           </p>
         </div>
 
         <button
-          onClick={() => setPage("dashboard")}
+          onClick={() =>
+            setPage("dashboard")
+          }
         >
           Dashboard
         </button>
 
       </div>
 
-
       {/* ================= MAIN ================= */}
 
       <div className="report-container">
-
 
         {/* ================= UPLOAD CARD ================= */}
 
@@ -195,10 +482,9 @@ function MedicalReports({ setPage }) {
           </h2>
 
           <p>
-            Select a text-based medical report
-            to analyze it.
+            Upload a PDF, JPEG, JPG, or TXT
+            medical report to analyze it.
           </p>
-
 
           <label className="file-label">
 
@@ -206,29 +492,40 @@ function MedicalReports({ setPage }) {
 
             <input
               type="file"
-              accept=".txt"
-              onChange={handleFileChange}
+              accept=".pdf,.txt,.jpg,.jpeg"
+              onChange={
+                handleFileChange
+              }
             />
 
           </label>
 
-
           {file && (
-            <p className="file-name">
-              Selected: {file.name}
+            <p className="file-success">
+              ✓ Medical report selected
+              successfully.
             </p>
           )}
 
-
           <button
             className="analyze-button"
-            onClick={analyzeReport}
+            onClick={
+              analyzeReport
+            }
+            disabled={
+              isProcessing ||
+              (
+                !reportText.trim() &&
+                !reportImage
+              )
+            }
           >
-            Analyze Report
+            {isProcessing
+              ? "Analyzing Report..."
+              : "Analyze Report"}
           </button>
 
         </div>
-
 
         {/* ================= ANALYSIS ================= */}
 
@@ -240,55 +537,83 @@ function MedicalReports({ setPage }) {
               📊 Report Analysis
             </h2>
 
-
             <div className="analysis-status">
               Analysis Complete
             </div>
 
-
-            {/* SUMMARY */}
-
-            <div className="analysis-section">
-
-              <h3>
-                Summary
-              </h3>
-
-              <p>
-                {analysis.summary}
-              </p>
-
-            </div>
-
-
-            {/* DETECTED VALUES */}
+            {/* ================= 1. DETECTED VALUES ================= */}
 
             <div className="analysis-section">
 
               <h3>
-                Detected Values
+                📊 Detected Values
               </h3>
 
-
-              {analysis.values.length > 0 ? (
+              {analysis.detectedValues
+                .length > 0 ? (
 
                 <div className="medical-values">
 
-                  {analysis.values.map(
-                    (item, index) => (
+                  {analysis.detectedValues.map(
+                    (
+                      item,
+                      index
+                    ) => (
 
                       <div
                         className="medical-value"
                         key={index}
                       >
 
-                        <span>
-                          {item.name}
-                        </span>
+                        <div>
+                          <span>
+                            Parameter
+                          </span>
 
-                        <strong>
-                          {item.value}
-                        </strong>
+                          <strong>
+                            {
+                              item.parameter
+                            }
+                          </strong>
+                        </div>
+
+                        <div>
+                          <span>
+                            Value
+                          </span>
+
+                          <strong>
+                            {
+                              item.value
+                            }
+                          </strong>
+                        </div>
+
+                        <div>
+                          <span>
+                            Reference Range
+                          </span>
+
+                          <strong>
+                            {
+                              item.referenceRange ||
+                              "Not provided"
+                            }
+                          </strong>
+                        </div>
+
+                        <div>
+                          <span>
+                            Status
+                          </span>
+
+                          <strong>
+                            {
+                              item.status ||
+                              "Not specified"
+                            }
+                          </strong>
+                        </div>
 
                       </div>
 
@@ -300,28 +625,271 @@ function MedicalReports({ setPage }) {
               ) : (
 
                 <p>
-                  No medical values could be
-                  extracted from this report.
+                  No medical values could
+                  be extracted from this
+                  report.
                 </p>
 
               )}
 
             </div>
 
+            {/* ================= 2. IMPORTANT FINDINGS ================= */}
 
-            {/* RECOMMENDATION */}
+            {analysis
+              .importantFindings
+              .length > 0 && (
 
-            <div className="analysis-section">
+              <div className="analysis-section">
 
-              <h3>
-                Recommendation
-              </h3>
+                <h3>
+                  ⚠️ Important Findings
+                </h3>
 
-              <p>
-                {analysis.recommendation}
-              </p>
+                <ul>
 
-            </div>
+                  {analysis
+                    .importantFindings
+                    .map(
+                      (
+                        finding,
+                        index
+                      ) => (
+
+                        <li key={index}>
+                          {finding}
+                        </li>
+
+                      )
+                    )}
+
+                </ul>
+
+              </div>
+
+            )}
+
+            {/* ================= 3. SIMPLE EXPLANATION ================= */}
+
+            {analysis.simpleExplanation && (
+
+              <div className="analysis-section">
+
+                <h3>
+                  📖 Simple Explanation
+                </h3>
+
+                <p>
+                  {
+                    analysis.simpleExplanation
+                  }
+                </p>
+
+              </div>
+
+            )}
+
+            {/* ================= 4. OUT-OF-RANGE VALUES ================= */}
+
+            {analysis
+              .outOfRangeValues
+              .length > 0 && (
+
+              <div className="analysis-section">
+
+                <h3>
+                  🚨 Out-of-Range Values
+                </h3>
+
+                <ul>
+
+                  {analysis
+                    .outOfRangeValues
+                    .map(
+                      (
+                        item,
+                        index
+                      ) => (
+
+                        <li key={index}>
+                          {item}
+                        </li>
+
+                      )
+                    )}
+
+                </ul>
+
+              </div>
+
+            )}
+
+            {/* ================= 5. MEDICAL TERMINOLOGY ================= */}
+
+            {analysis
+              .terminology
+              .length > 0 && (
+
+              <div className="analysis-section">
+
+                <h3>
+                  📚 Medical Terminology
+                </h3>
+
+                <div className="medical-values">
+
+                  {analysis
+                    .terminology
+                    .map(
+                      (
+                        item,
+                        index
+                      ) => (
+
+                        <div
+                          className="medical-value"
+                          key={index}
+                        >
+
+                          <div>
+                            <span>
+                              Term
+                            </span>
+
+                            <strong>
+                              {item.term}
+                            </strong>
+                          </div>
+
+                          <div>
+                            <span>
+                              Explanation
+                            </span>
+
+                            <strong>
+                              {
+                                item.explanation
+                              }
+                            </strong>
+                          </div>
+
+                        </div>
+
+                      )
+                    )}
+
+                </div>
+
+              </div>
+
+            )}
+
+            {/* ================= 6. EDUCATIONAL INFORMATION ================= */}
+
+            {analysis
+              .educationalInformation
+              .length > 0 && (
+
+              <div className="analysis-section">
+
+                <h3>
+                  🎓 Educational Information
+                </h3>
+
+                <ul>
+
+                  {analysis
+                    .educationalInformation
+                    .map(
+                      (
+                        info,
+                        index
+                      ) => (
+
+                        <li key={index}>
+                          {info}
+                        </li>
+
+                      )
+                    )}
+
+                </ul>
+
+              </div>
+
+            )}
+
+            {/* ================= 7. AI INSIGHTS ================= */}
+
+            {analysis
+              .aiInsights
+              .length > 0 && (
+
+              <div className="analysis-section">
+
+                <h3>
+                  💡 AI Insights &
+                  Recommendations
+                </h3>
+
+                <ul>
+
+                  {analysis
+                    .aiInsights
+                    .map(
+                      (
+                        insight,
+                        index
+                      ) => (
+
+                        <li key={index}>
+                          {insight}
+                        </li>
+
+                      )
+                    )}
+
+                </ul>
+
+              </div>
+
+            )}
+
+            {/* ================= 8. QUESTIONS FOR DOCTOR ================= */}
+
+            {analysis
+              .questionsForDoctor
+              .length > 0 && (
+
+              <div className="analysis-section">
+
+                <h3>
+                  👨‍⚕️ Questions to Ask
+                  Your Doctor
+                </h3>
+
+                <ul>
+
+                  {analysis
+                    .questionsForDoctor
+                    .map(
+                      (
+                        question,
+                        index
+                      ) => (
+
+                        <li key={index}>
+                          {question}
+</li>
+
+                      )
+                    )}
+
+                </ul>
+
+              </div>
+
+            )}
 
           </div>
 
@@ -329,15 +897,17 @@ function MedicalReports({ setPage }) {
 
       </div>
 
-
       {/* ================= DISCLAIMER ================= */}
 
       <div className="report-disclaimer">
 
-        ⚠️ This feature is a college-project
-        prototype. It extracts basic information
-        from the uploaded report and does not
-        provide a medical diagnosis.
+        ⚠️ This feature is a
+        college-project prototype.
+        AI-generated information is
+        educational and does not provide
+        a medical diagnosis. Please review
+        the results with a qualified
+        healthcare professional.
 
       </div>
 

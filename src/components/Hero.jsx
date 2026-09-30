@@ -1,139 +1,71 @@
-import { useEffect, useState } from "react";
 import "../styles/Hero.css";
 
-function Hero({ setPage, user, viewAppointment }) {
-  const [appointment, setAppointment] = useState(null);
-
-  useEffect(() => {
-    if (!user) {
-      setAppointment(null);
-      return;
-    }
-
-    const savedAppointments =
-      JSON.parse(localStorage.getItem("appointments")) || {};
-
-    const patientAppointment =
-      savedAppointments[user.email];
-
-    setAppointment(patientAppointment || null);
-  }, [user]);
-
+function Hero() {
   return (
-    <section className="hero">
+    <>
+      {/* ================= HERO ================= */}
 
-      {/* LEFT SIDE */}
-      <div className="hero-left">
+      <section className="hero">
+        <div className="hero-content">
 
-        <h1>
-          AI-Powered Healthcare for Everyone
-        </h1>
+          <div className="hero-text">
+            <h1>AI-Powered Healthcare for Everyone</h1>
 
-        <h3>
-          Smart, Secure & Instant Healthcare Solutions
-        </h3>
+            <h3>
+              Smart, Secure & Instant Healthcare Solutions
+            </h3>
 
-        <p>
-          Book appointments, chat with AI, analyze medical
-          reports, and connect with expert doctors—all from
-          one platform.
-        </p>
+            <p>
+              Book appointments, chat with AI, analyze medical
+              reports, and connect with expert doctors—all from
+              one platform.
+            </p>
+          </div>
 
-        <div className="hero-buttons">
+          <div className="hero-visual">
+            <div className="medical-icon">🏥</div>
+            <div className="ai-icon">🤖</div>
+            <div className="heart-icon">❤️</div>
+          </div>
 
-          <button
-            onClick={() => setPage("doctors")}
-          >
-            Find a Doctor
-          </button>
+        </div>
+      </section>
 
-          <button
-            onClick={() =>
-              alert("AI Assistant coming soon!")
-            }
-          >
-            Talk to AI
-          </button>
+
+      {/* ================= ABOUT ================= */}
+
+      <section className="about-hospital">
+
+        <div className="about-content">
+
+          <h2>About Smart Hospital AI</h2>
+
+          <p>
+            Smart Hospital AI is an AI-powered healthcare platform
+            designed to make healthcare services more accessible,
+            convenient, and intelligent.
+          </p>
+
+          <p>
+            Patients can find doctors, manage appointments, use an
+            AI assistant, analyze medical reports, manage their
+            profile, and access emergency assistance—all from one
+            platform.
+          </p>
+
+          <div className="about-highlights">
+
+            <span>🩺 Find Doctors</span>
+            <span>📅 Appointments</span>
+            <span>🤖 AI Assistant</span>
+            <span>📄 Report Analysis</span>
+
+          </div>
 
         </div>
 
-      </div>
-
-
-      {/* RIGHT SIDE */}
-      <div className="hero-right">
-
-        {appointment ? (
-
-          <div className="appointment-card">
-
-            <h2>
-              📅 Upcoming Appointment
-            </h2>
-
-            <p>
-              <strong>Doctor:</strong>{" "}
-              {appointment.doctor}
-            </p>
-
-            <p>
-              <strong>Specialty:</strong>{" "}
-              {appointment.specialty}
-            </p>
-
-            <p>
-              <strong>Date:</strong>{" "}
-              {appointment.date}
-            </p>
-
-            <p>
-              <strong>Time:</strong>{" "}
-              {appointment.time}
-            </p>
-
-            <button
-              className="view-appointment"
-              onClick={() =>
-                viewAppointment(appointment)
-              }
-            >
-              View Appointment
-            </button>
-
-          </div>
-
-        ) : (
-
-          <div className="appointment-card no-appointment">
-
-            <div className="calendar-icon">
-              📅
-            </div>
-
-            <h2>
-              No Upcoming Appointment
-            </h2>
-
-            <p>
-              Find a doctor and book your appointment.
-            </p>
-
-            <button
-              className="view-appointment"
-              onClick={() =>
-                setPage("doctors")
-              }
-            >
-              Find a Doctor
-            </button>
-
-          </div>
-
-        )}
-
-      </div>
-
-    </section>
+      </section>
+    </>
   );
 }
 

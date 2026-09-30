@@ -1,33 +1,149 @@
-.home {
+/* ================= HOME SERVICES ================= */
+
+.home-services {
+  width: 100%;
+  max-width: 1200px;
+
+  margin: 0 auto;
+
+  padding: 25px 30px 45px;
+
+  box-sizing: border-box;
+
+  display: grid;
+
+  grid-template-columns: repeat(4, 1fr);
+
+  gap: 18px;
+}
+
+
+/* ================= SERVICE CARD ================= */
+
+.home-service-card {
+  min-height: 155px;
+
+  padding: 22px 18px;
+
+  box-sizing: border-box;
+
+  border-radius: 18px;
+
   text-align: center;
-  margin-top: 50px;
-  font-family: Arial, sans-serif;
-}
 
-.home h1 {
-  color: #1e88e5;
-}
-
-.home p {
-  font-size: 20px;
-  color: #555;
-}
-
-.buttons {
-  margin-top: 20px;
-}
-
-.buttons button {
-  margin: 10px;
-  padding: 12px 20px;
-  font-size: 16px;
-  border: none;
-  background-color: #1e88e5;
-  color: white;
-  border-radius: 8px;
   cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+
+  border: 1px solid rgba(255, 255, 255, 0.8);
 }
 
-.buttons button:hover {
-  background-color: #1565c0;
+.home-service-card:hover {
+  transform: translateY(-5px);
+
+  box-shadow: 0 10px 22px rgba(40, 80, 130, 0.15);
+}
+
+
+/* ================= ICON ================= */
+
+.service-icon {
+  font-size: 38px;
+
+  margin-bottom: 8px;
+}
+
+
+/* ================= TEXT ================= */
+
+.home-service-card h3 {
+  margin: 0 0 7px;
+
+  font-size: 18px;
+
+  font-weight: 600;
+
+  color: #245a9b;
+}
+
+.home-service-card p {
+  margin: 0;
+
+  font-size: 13px;
+
+  line-height: 1.45;
+
+  color: #607286;
+}
+
+
+/* ================= CARD COLORS ================= */
+
+.dashboard-service {
+  background: linear-gradient(
+    135deg,
+    #eaf5ff,
+    #f3f8ff
+  );
+}
+
+.emergency-service {
+  background: linear-gradient(
+    135deg,
+    #fff0f2,
+    #fff8f8
+  );
+}
+
+.emergency-service h3 {
+  color: #c44b5c;
+}
+
+.doctors-service {
+  background: linear-gradient(
+    135deg,
+    #eafbf6,
+    #f4fffc
+  );
+}
+
+.doctors-service h3 {
+  color: #23816c;
+}
+
+.reports-service {
+  background: linear-gradient(
+    135deg,
+    #f2efff,
+    #faf8ff
+  );
+}
+
+.reports-service h3 {
+  color: #6753a8;
+}
+
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 900px) {
+  .home-services {
+    grid-template-columns: repeat(2, 1fr);
+
+    padding: 20px;
+  }
+}
+
+@media (max-width: 550px) {
+  .home-services {
+    grid-template-columns: 1fr;
+
+    padding: 20px;
+  }
+
+  .home-service-card {
+    min-height: 140px;
+  }
 }

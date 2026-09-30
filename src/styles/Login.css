@@ -22,12 +22,15 @@
 
 .login-icon {
   font-size: 50px;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 
 .login-card h1 {
   color: #0a4d8c;
-  margin-bottom: 10px;
+  font-size: 36px;
+  line-height: 1.2;
+  margin: 10px 0 15px;
+  font-weight: 600;
 }
 
 .login-card p {

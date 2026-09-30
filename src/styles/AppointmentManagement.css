@@ -1,0 +1,241 @@
+.appointment-management-page {
+  min-height: 100vh;
+  padding: 35px 7%;
+  background: #f5f9fa;
+  box-sizing: border-box;
+}
+
+.appointment-management-header {
+  position: relative;
+  background: white;
+  text-align: center;
+  padding: 35px 25px;
+  border-radius: 16px;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+}
+
+.appointment-management-header h1 {
+  margin: 0 0 10px;
+  color: #1e3a8a;
+  font-size: 34px;
+}
+
+.appointment-management-header p {
+  margin: 0;
+  color: #64748b;
+  font-size: 16px;
+}
+
+.appointment-back-button {
+  position: absolute;
+  right: 25px;
+  top: 25px;
+  width: auto;
+  background: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 18px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.appointment-back-button:hover {
+  background: #1d4ed8;
+}
+
+.appointments-container {
+  display: grid;
+  gap: 20px;
+}
+
+.appointment-management-card {
+  background: white;
+  padding: 25px;
+  border-radius: 14px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.06);
+}
+
+.appointment-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.appointment-card-header h2 {
+  margin: 0;
+  color: #1e3a8a;
+}
+
+.appointment-status {
+  background: #dcfce7;
+  color: #166534;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.appointment-management-card p {
+  color: #475569;
+  margin: 10px 0;
+}
+
+.appointment-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.appointment-actions button,
+.no-appointments button {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 16px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.reschedule-button {
+  background: #2563eb;
+  color: white;
+}
+
+.reschedule-button:hover {
+  background: #1d4ed8;
+}
+
+.cancel-appointment-button {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.cancel-appointment-button:hover {
+  background: #fecaca;
+}
+
+.no-appointments {
+  background: white;
+  text-align: center;
+  padding: 50px 25px;
+  border-radius: 14px;
+}
+
+.no-appointments h2 {
+  color: #1e3a8a;
+}
+
+.no-appointments p {
+  color: #64748b;
+}
+
+.no-appointments button {
+  background: #2563eb;
+  color: white;
+}
+
+.book-another-button {
+  margin-top: 20px;
+  padding: 11px 20px;
+  background: #0a84ff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.book-another-button:hover {
+  background: #0066cc;
+}
+
+/* ========================= */
+/* RESCHEDULE FORM */
+/* ========================= */
+
+.reschedule-form {
+  max-width: 650px;
+  margin: 0 auto 30px;
+  padding: 30px;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  box-sizing: border-box;
+}
+
+.reschedule-form h2 {
+  margin: 0 0 20px;
+  text-align: center;
+  color: #1e3a8a;
+  font-size: 25px;
+}
+
+.reschedule-form p {
+  margin-bottom: 22px;
+  color: #475569;
+  text-align: center;
+}
+
+.reschedule-form label {
+  display: block;
+  margin: 16px 0 7px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.reschedule-form input,
+.reschedule-form select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  background: white;
+  font-size: 15px;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.reschedule-form input:focus,
+.reschedule-form select:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.12);
+}
+
+.reschedule-form-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 25px;
+}
+
+.reschedule-form-actions button {
+  border: none;
+  border-radius: 8px;
+  padding: 11px 22px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.reschedule-form-actions button:first-child {
+  background: #2563eb;
+  color: white;
+}
+
+.reschedule-form-actions button:first-child:hover {
+  background: #1d4ed8;
+}
+
+.reschedule-form-actions button:last-child {
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.reschedule-form-actions button:last-child:hover {
+  background: #cbd5e1;
+}

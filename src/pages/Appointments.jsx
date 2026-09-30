@@ -28,23 +28,51 @@ function Appointments({ setPage, selectedDoctor, user }) {
     }
 
     const appointment = {
-      doctor,
-      specialty,
-      date,
-      time,
-    };
+  id:
+    "APT-" +
+    new Date().getFullYear() +
+    "-" +
+    String(Date.now()).slice(-6),
+  doctor,
+  specialty,
+  date,
+  time,
+  status: "Booked",
+};
 
-    // Get all existing patient appointments
-    const savedAppointments =
-      JSON.parse(localStorage.getItem("appointments")) || {};
+// Get all existing patient appointments
+const savedAppointments =
+  JSON.parse(localStorage.getItem("appointments")) || {};
 
-    // Save appointment under the logged-in patient's email
-    savedAppointments[user.email] = appointment;
+// Get this patient's existing appointments
+let patientAppointments =
+  savedAppointments[user.email] || [];
 
-    localStorage.setItem(
-      "appointments",
-      JSON.stringify(savedAppointments)
-    );
+// Convert old single appointment format to an array
+if (!Array.isArray(patientAppointments)) {
+  patientAppointments = [
+    {
+      ...patientAppointments,
+      id:
+        "APT-" +
+        new Date().getFullYear() +
+        "-" +
+        String(Date.now()).slice(-6),
+      status: "Booked",
+    },
+  ];
+}
+
+// Add the new appointment
+patientAppointments.push(appointment);
+
+// Save all appointments for this patient
+savedAppointments[user.email] = patientAppointments;
+
+localStorage.setItem(
+  "appointments",
+  JSON.stringify(savedAppointments)
+);
 
     alert("Appointment booked successfully!");
 
@@ -145,11 +173,64 @@ function Appointments({ setPage, selectedDoctor, user }) {
 
         <label>Time</label>
 
-        <input
-          type="time"
-          value={time}
-          onChange={(e) => setTime(e.target.value)}
-        />
+        <div className="time-selection">
+
+  <select
+  value={time.split(":")[0] || ""}
+  onChange={(e) => {
+    const minutes = time.split(":")[1] || "00";
+    const period = time.split(":")[2] || "AM";
+
+    setTime(`${e.target.value}:${minutes}:${period}`);
+  }}
+>
+  <option value="">Hour</option>
+
+  <option value="09">09</option>
+  <option value="10">10</option>
+  <option value="11">11</option>
+  <option value="12">12</option>
+  <option value="01">01</option>
+  <option value="02">02</option>
+  <option value="03">03</option>
+  <option value="04">04</option>
+  <option value="05">05</option>
+  <option value="06">06</option>
+  <option value="07">07</option>
+  <option value="08">08</option>
+</select>
+
+  <select
+    value={time.split(":")[1] || ""}
+    onChange={(e) => {
+      const hour = time.split(":")[0] || "1";
+      const period = time.split(":")[2] || "AM";
+
+      setTime(`${hour}:${e.target.value}:${period}`);
+    }}
+  >
+    <option value="">Min</option>
+    <option value="00">00</option>
+    <option value="15">15</option>
+    <option value="30">30</option>
+    <option value="45">45</option>
+  </select>
+
+  <select
+    value={time.split(":")[2] || ""}
+    onChange={(e) => {
+      const hour = time.split(":")[0] || "1";
+      const minutes = time.split(":")[1] || "00";
+
+      setTime(`${hour}:${minutes}:${e.target.value}`);
+    }}
+  >
+    <option value="">AM/PM</option>
+    <option value="AM">AM</option>
+    <option value="PM">PM</option>
+  </select>
+
+</div>
 
         <button type="submit">
           Confirm Appointment

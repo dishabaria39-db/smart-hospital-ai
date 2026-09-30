@@ -50,6 +50,13 @@ function Doctors({ setPage, openAppointment }) {
     <div className="doctors-page">
 
       <div className="doctors-header">
+        <button
+  className="dashboard-button"
+  onClick={() => setPage("dashboard")}
+>
+  Dashboard
+</button>
+
         <h1>Our Doctors</h1>
 
         <p>
@@ -57,6 +64,8 @@ function Doctors({ setPage, openAppointment }) {
           specialist for your healthcare needs.
         </p>
       </div>
+
+      
 
       <div className="doctors-grid">
 
@@ -88,11 +97,7 @@ function Doctors({ setPage, openAppointment }) {
 
       </div>
 
-      <button
-  onClick={() => openAppointment(doctor)}
->
-  Book Appointment
-</button>
+     
 
     </div>
   );

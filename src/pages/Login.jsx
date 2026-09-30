@@ -75,9 +75,16 @@ function Login({ setPage, setUser }) {
     }
 
     const newUser = {
-      name: name.trim(),
-      email: email.trim(),
-    };
+  name: name.trim(),
+  email: email.trim(),
+  age: "",
+  gender: "",
+  bloodGroup: "",
+  phone: "",
+  emergencyContact: "",
+  medicalConditions: "",
+  allergies: "",
+};
 
     // Add new account without deleting old accounts
     const updatedUsers = [
