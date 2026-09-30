@@ -129,7 +129,7 @@ Centralized dashboard providing access to:
 - Vite
 
 ##  Application Architecture
-
+'''text
 Smart Hospital AI
 │
 ├── Frontend
@@ -148,9 +148,9 @@ Smart Hospital AI
     ├── OCR for Scanned Documents
     ├── Image Analysis
     └── Gemini AI Analysis
-
+'''text
 ## Project Structure
-
+'''text
 smart-hospital-ai/
 │
 ├── backend/
@@ -194,7 +194,7 @@ smart-hospital-ai/
 ├── server.js
 ├── vite.config.js
 └── README.md
-
+'''text
 # 🚀 Getting Started
 1. Clone the repository
 git clone https://github.com/dishabaria39-db/smart-hospital-ai.git
