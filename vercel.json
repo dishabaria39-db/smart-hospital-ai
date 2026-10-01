@@ -2,8 +2,8 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "rewrites": [
     {
-      "source": "/api/:path*",
-      "destination": "https://smart-hospital-ai-kgqh.onrender.com/api/:path*"
+      "source": "/api/analyze-report",
+      "destination": "https://smart-hospital-ai-kgqh.onrender.com/api/analyze-report"
     }
   ]
 }
