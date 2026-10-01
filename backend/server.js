@@ -42,9 +42,9 @@ app.post("/api/analyze-report", async (req, res) => {
       });
     }
 
-    const model = reportImage
-      ? "gemini-3.5-flash"
-      : "gemini-3.5-flash-lite";
+    const extractionModel = "gemini-3.5-flash-lite";
+
+const analysisModel = "gemini-3.5-flash-lite";
 
     /*
      =====================================================
@@ -124,7 +124,7 @@ Do not interpret the results.
 `;
 
       const extractionResponse = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
+        `https://generativelanguage.googleapis.com/v1beta/models/${extractionModel}:generateContent`,
         {
           method: "POST",
           headers: {
@@ -334,7 +334,7 @@ ${extractedReport}
 `;
 
     const analysisResponse = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent`,
+      `https://generativelanguage.googleapis.com/v1beta/models/${analysisModel}:generateContent`,
       {
         method: "POST",
         headers: {
