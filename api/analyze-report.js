@@ -1,11 +1,7 @@
-export default async function handler(req, res) {
-  if (req.method !== "POST") {
-    return res.status(405).json({
-      error: "Method not allowed",
-    });
-  }
-
+export async function POST(request) {
   try {
+    const body = await request.text();
+
     const response = await fetch(
       "https://smart-hospital-ai-kgqh.onrender.com/api/analyze-report",
       {
@@ -13,26 +9,37 @@ export default async function handler(req, res) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(req.body),
+        body,
       }
     );
 
     const responseText = await response.text();
 
-    res.status(response.status);
-
-    res.setHeader(
-      "Content-Type",
-      response.headers.get("content-type") ||
-        "application/json"
-    );
-
-    return res.send(responseText);
+    return new Response(responseText, {
+      status: response.status,
+      headers: {
+        "Content-Type":
+          response.headers.get("content-type") ||
+          "application/json",
+      },
+    });
   } catch (error) {
     console.error("Render backend error:", error);
 
-    return res.status(500).json({
-      error: "Unable to connect to the AI backend.",
-    });
+    return Response.json(
+      {
+        error: "Unable to connect to the AI backend.",
+      },
+      { status: 500 }
+    );
   }
+}
+
+export async function GET() {
+  return Response.json(
+    {
+      message: "Medical report API is running.",
+    },
+    { status: 200 }
+  );
 }
