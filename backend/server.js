@@ -5,6 +5,10 @@ import dotenv from "dotenv";
 dotenv.config();
 
 const app = express();
+app.use((req, res, next) => {
+  console.log("REQUEST RECEIVED:", req.method, req.url);
+  next();
+});
 
 app.use(
   cors({
