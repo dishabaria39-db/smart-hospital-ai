@@ -411,6 +411,13 @@ ${extractedReport}
 app.get("/", (req, res) => {
   res.send("Medical AI backend is running.");
 });
+app.post("/test-post", (req, res) => {
+  console.log("TEST POST RECEIVED");
+  res.json({
+    success: true,
+    message: "POST requests are reaching Render."
+  });
+});
 
 const PORT = process.env.PORT || 5000;
 
